@@ -4,17 +4,18 @@ import PropTypes from 'prop-types';
 
 class ImageGalleryItem extends Component {
   render() {
-    const { imageUrl, imageAlt, id } = this.props;
-    return (
-      <li className={css.galleryItem}>
-        <img key={id} src={imageUrl} alt={imageAlt} />
+    const { photos } = this.props;
+    return photos.map(({ webformatURL, tags, id }) => (
+      <li key={id} className={css.galleryItem}>
+        <img key={id} src={webformatURL} alt={tags} />
       </li>
-    );
+    ));
   }
 }
 
 ImageGalleryItem.propTypes = {
-  imageUrl: PropTypes.string,
+  photos: PropTypes.array,
+  webformatURL: PropTypes.string,
   imageAlt: PropTypes.string,
   id: PropTypes.string,
 };
