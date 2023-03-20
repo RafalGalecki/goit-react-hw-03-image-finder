@@ -1,10 +1,10 @@
+@import "../Button/Button.module.css";
+
 :root {
   --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   --animation-duration: 250ms;
   --color-brand: #2196f3;
 }
-
-
 
 .searchbar {
   display: flex;
@@ -61,42 +61,31 @@
   min-width: 80px;
 }
 
-
 /* Media */
 @media screen and (min-width: 480px) {
-  .search-form {
+  .form {
     flex-direction: row;
     width: 60vw;
   }
-  .search-form__input {
+  .input {
     padding: 4px;
   }
-  .search-form__btn {
+  .search__btn {
     width: 20vw;
-  }
-  .gallery {
-    margin-top: 40px;
-  }
-  .gallery__item {
-    flex-basis: calc((100% - 12px) / 2);
   }
 }
 
 @media screen and (min-width: 768px) {
-  .search-form {
+  .form {
     width: 50vw;
   }
 
-  .search-form__btn {
+  .search__btn {
     width: 16vw;
-  }
-
-  .gallery__item {
-    flex-basis: calc((100% - 12px * 2) / 3);
   }
 }
 @media screen and (min-width: 1140px) {
-  .search-form {
+  .form {
     width: 40vw;
   }
 }

@@ -6,11 +6,7 @@ class ImageGallery extends Component {
   render() {
     const { children } = this.props;
 
-    return (
-      <main className={css.galleryContainer}>
-        <div className={css.gallery}>{children}</div>
-      </main>
-    );
+    return <ul className={css.gallery}>{children}</ul>;
   }
 }
 
