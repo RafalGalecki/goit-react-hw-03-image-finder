@@ -3,17 +3,23 @@ import css from './Button.module.css';
 import PropTypes from 'prop-types';
 
 class Button extends Component {
+  handleClick = () => {
+    const { page } = this.props;
+    const next = page + 1;
+    this.props.onClick(next);
+  };
   render() {
-    const { totalPages, loadMore } = this.props;
     return (
-      <button type='button' value={totalPages} className={css.btn} onClick={loadMore}>Load more</button> 
+      <button type="button" className={css.btn} onClick={this.handleClick}>
+        Load more
+      </button>
     );
   }
 }
 
 Button.propTypes = {
-  loadMore: PropTypes.func,
-  totalPages: PropTypes.number,
+  onClick: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
 };
 
 export default Button;
