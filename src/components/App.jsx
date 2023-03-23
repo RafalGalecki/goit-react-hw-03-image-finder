@@ -1,6 +1,7 @@
 import { Component } from 'react';
+import css from './App.module.css';
 //import axios from 'axios';
-import { fetchPhotosWithQuery } from 'services/api';
+import { fetchPhotosWithQuery, PER_PAGE } from 'services/api';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
@@ -8,14 +9,10 @@ import Modal from './Modal/Modal';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
 
-// axios.defaults.baseURL = 'https://pixabay.com/api/';
-// const API_KEY = '32900426-a12efdc1668c6b000f20a1416';
-// const PER_PAGE = 12;
-// let query = 'cat';
-// let page = 1;
+const DELAY_TIME = 700;
 
 const INITIAL_STATE = {
-  query: '',
+  query: 'sweet cats',
   page: 1,
   totalHits: 0,
   allPages: 1,
@@ -28,7 +25,20 @@ export class App extends Component {
     ...INITIAL_STATE,
   };
 
-  searchPhotos = async (query, page) => {
+  async componentDidMount() {
+    this.setState({ isLoading: true });
+
+    // get initial photos onload
+    const response = await fetchPhotosWithQuery(this.state.query);
+    console.log('response didmount', response);
+    this.setState({ photos: response.hits });
+
+    setTimeout(async () => {
+      this.setState({ isLoading: false });
+    }, DELAY_TIME);
+  }
+
+  getPhotos = async (query, page) => {
     this.setState({ isLoading: true });
     console.log('przed fetch:', page);
     const response = await fetchPhotosWithQuery(query, page);
@@ -42,30 +52,32 @@ export class App extends Component {
           tags: photo.tags,
         });
       });
-      const prevPhotos = this.state.photos;
+
+      const allPages = Math.ceil(response.totalHits / PER_PAGE);
+      const previousPhotos = this.state.photos;
+
       if (page !== 1) {
-        prevPhotos.forEach(prev => {
+        previousPhotos.forEach(element => {
           photos.forEach((photo, index, array) => {
-            if (prev.id === photo.id) {
+            if (element.id === photo.id) {
               array.splice(index, 1);
             }
           });
         });
       }
-      const allPages = Math.ceil(response.totalHits / response.hits.length);
 
       this.setState(prevState => {
-        let newState = [];
+        let photosToRender = [];
         console.log('prevState', prevState);
         page > 1
-          ? (newState = [...prevState.photos, ...photos])
-          : (newState = [...photos]);
+          ? (photosToRender = [...prevState.photos, ...photos])
+          : (photosToRender = [...photos]);
         return {
           query,
           totalHits: response.totalHits,
           page,
           allPages,
-          photos: newState,
+          photos: photosToRender,
           isLoading: false,
         };
       });
@@ -73,18 +85,6 @@ export class App extends Component {
       this.setState({ ...INITIAL_STATE });
     }
   };
-  // updateQuery = evt => {
-  //   console.log(evt); // Dostępny obiekt zdarzenia w odwołaniu onClick
-
-  //   this.setState({
-  //     query: evt.target.value,
-  //   });
-  // };
-  // query = el => {
-  //   this.setState({
-  //     query: el.currentTarget.value,
-  //   });
-  // };
 
   render() {
     const { query, page, photos, totalHits, allPages, isLoading, error } =
@@ -93,19 +93,16 @@ export class App extends Component {
     console.log('photos', photos);
 
     return (
-      <div>
-        <Searchbar searchPhotos={value => this.searchPhotos(value, 1)} />
+      <div className={css.main}>
+        <Searchbar getPhotos={value => this.getPhotos(value, 1)} />
         {error ? <p>'Whoops, something went wrong: {error.message}</p> : null}
-        {isLoading && <Loader title="Loading..." />}
 
-        <ImageGallery photos={photos}>
+        <ImageGallery>
           <ImageGalleryItem photos={photos} />
+          {isLoading && <Loader />}
         </ImageGallery>
         {totalHits > 0 && page < allPages && page !== allPages && (
-          <Button
-            page={page}
-            onClick={next => this.searchPhotos(query, next)}
-          />
+          <Button page={page} onClick={next => this.getPhotos(query, next)} />
         )}
         <Modal />
       </div>

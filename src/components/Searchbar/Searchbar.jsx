@@ -16,15 +16,13 @@ class Searchbar extends Component {
     this.setState({ inputQuery });
   };
 
-  // Wywoływany jest podczas wysyłania formularza
+  
   handleSubmit = evt => {
     evt.preventDefault();
     const { inputQuery } = this.state;
     
-    this.props.searchPhotos(inputQuery)
-    //onst { updateQuery } = this.props;
-    // Props, który przekazywany jest do formularza do wywołania podczas jego wysyłania
-    //this.props.onSubmit({ ...this.state });
+    this.props.getPhotos(inputQuery)
+    
   };
 
   render() {
@@ -55,7 +53,7 @@ class Searchbar extends Component {
 }
 
 Searchbar.propTypes = {
-  searchPhotos: PropTypes.func.isRequired,
+  getPhotos: PropTypes.func.isRequired,
 };
 
 export default Searchbar;
