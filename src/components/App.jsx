@@ -86,9 +86,21 @@ export class App extends Component {
     }
   };
 
+  showModal = largeSrc => {
+    console.log('w App largeSrc', largeSrc);
+  };
+
   render() {
-    const { query, page, photos, totalHits, allPages, isLoading, error } =
-      this.state;
+    const {
+      query,
+      page,
+      photos,
+      totalHits,
+      allPages,
+      isLoading,
+      error,
+      largePhoto,
+    } = this.state;
     console.log('query and page and allPages: ', query, page, allPages);
     console.log('photos', photos);
 
@@ -98,13 +110,16 @@ export class App extends Component {
         {error ? <p>'Whoops, something went wrong: {error.message}</p> : null}
 
         <ImageGallery>
-          <ImageGalleryItem photos={photos} />
+          <ImageGalleryItem
+            photos={photos}
+            showModal={largeSrc => this.showModal(largeSrc)}
+          />
           {isLoading && <Loader />}
         </ImageGallery>
         {totalHits > 0 && page < allPages && page !== allPages && (
           <Button page={page} onClick={next => this.getPhotos(query, next)} />
         )}
-        <Modal />
+        {largePhoto && <Modal src={largePhoto} />}
       </div>
     );
   }

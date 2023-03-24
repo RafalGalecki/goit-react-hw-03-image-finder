@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 class Modal extends Component {
   render() {
-    const { imageUrl, imageAlt, id } = this.props;
+    const { largePhoto } = this.props;
     return (
-      <div className={css.overlay}>
+      <div className={css.backdrop}>
         <div className={css.modal}>
-          <img key={id} src={imageUrl} alt={imageAlt} />
+          <img src={largePhoto} alt='' />
         </div>
       </div>
     );

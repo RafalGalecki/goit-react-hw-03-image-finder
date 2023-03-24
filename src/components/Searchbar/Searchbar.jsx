@@ -17,8 +17,8 @@ class Searchbar extends Component {
   };
 
   
-  handleSubmit = evt => {
-    evt.preventDefault();
+  handleSubmit = event => {
+    event.preventDefault();
     const { inputQuery } = this.state;
     
     this.props.getPhotos(inputQuery)
