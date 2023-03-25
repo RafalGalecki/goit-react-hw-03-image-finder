@@ -118,10 +118,8 @@ export class App extends Component {
       <div className={css.main}>
         <Searchbar getPhotos={value => this.getPhotos(value, 1)} />
         {error ? <p>'Whoops, something went wrong: {error.message}</p> : null}
-
-        <ImageGallery photos={photos} showModal={this.showModal}>
-          {isLoading && <Loader />}
-        </ImageGallery>
+        {isLoading && <Loader />}
+        <ImageGallery photos={photos} showModal={this.showModal} />
         {totalHits > 0 && page < allPages && page !== allPages && (
           <Button page={page} onClick={next => this.getPhotos(query, next)} />
         )}
