@@ -1,16 +1,10 @@
 import { Component } from 'react';
-//import React from 'react';
 import css from './ImageGalleryItem.module.css';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-//const INITIAL_SRC = { largeSrc: '' };
 class ImageGalleryItem extends Component {
-  //state = { ...INITIAL_SRC };
-
-
-  //const ImageGalleryItem = props => {
   render() {
-    const { id, webformatURL, largeImageURL, tags, showMod } = this.props;
+    const { id, webformatURL, largeImageURL, tags, showModal } = this.props;
 
     return (
       <li key={id} className={css.gallery__item}>
@@ -21,18 +15,18 @@ class ImageGalleryItem extends Component {
           loading="lazy"
           src={webformatURL}
           alt={tags}
-          onClick={() => showMod(largeImageURL)}
+          onClick={() => showModal(largeImageURL)}
         />
       </li>
     );
-  
   }
 }
-// ImageGalleryItem.propTypes = {
-//   photos: PropTypes.array,
-//   webformatURL: PropTypes.string,
-//   tags: PropTypes.string,
-//   id: PropTypes.string,
-// };
+ImageGalleryItem.propTypes = {
+  webformatURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  showModal: PropTypes.func.isRequired,
+};
 
 export default ImageGalleryItem;

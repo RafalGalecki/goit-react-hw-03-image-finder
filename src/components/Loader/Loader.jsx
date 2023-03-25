@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { Circles } from 'react-loader-spinner';
 import css from './Loader.module.css';
-import PropTypes from 'prop-types';
 
 class Loader extends Component {
   render() {
@@ -18,9 +17,5 @@ class Loader extends Component {
     );
   }
 }
-
-Loader.propTypes = {
-  title: PropTypes.string,
-};
 
 export default Loader;

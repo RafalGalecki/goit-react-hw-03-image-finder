@@ -4,23 +4,24 @@ import PropTypes from 'prop-types';
 
 class Modal extends Component {
   componentDidMount() {
-    window.addEventListener('keyup', this.handleClose);
+    window.addEventListener('keydown', this.handleClose);
   }
   componentWillUnmount() {
-    window.removeEventListener('keyup', this.handleClose);
+    window.removeEventListener('keydown', this.handleClose);
   }
   handleClose = event => {
     if (event.code === 'Escape') {
-      return this.props.hideMod();
-  }
-}
+      return this.props.hideModal();
+    }
+  };
 
   render() {
-    //const { largePhoto } = this.props;
+    const { hideModal, largeImg } = this.props;
+
     return (
-      <div className={css.backdrop} onClick={this.props.hideMod}>
+      <div className={css.backdrop} onClick={hideModal}>
         <div className={css.modal}>
-          <img src={this.props.largeImg} alt="" />
+          <img src={largeImg} alt="" />
         </div>
       </div>
     );
@@ -28,9 +29,8 @@ class Modal extends Component {
 }
 
 Modal.propTypes = {
-  imageUrl: PropTypes.string,
-  imageAlt: PropTypes.string,
-  id: PropTypes.string,
+  largeImg: PropTypes.string.isRequired,
+  hideModal: PropTypes.func.isRequired,
 };
 
 export default Modal;
