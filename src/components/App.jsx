@@ -4,7 +4,7 @@ import css from './App.module.css';
 import { fetchPhotosWithQuery, PER_PAGE } from 'services/api';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
-import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
+//import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Modal from './Modal/Modal';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
@@ -17,7 +17,9 @@ const INITIAL_STATE = {
   totalHits: 0,
   allPages: 1,
   photos: [],
+  largePhoto: '',
   isLoading: false,
+  isModal: false,
 };
 
 export class App extends Component {
@@ -86,8 +88,17 @@ export class App extends Component {
     }
   };
 
-  showModal = largeSrc => {
-    console.log('w App largeSrc', largeSrc);
+  showModal = largeImg => {
+    this.setState({
+      isModal: true,
+      largePhoto: largeImg,
+    });
+  };
+  hideModal = () => {
+    this.setState({
+      isModal: !this.state.isModal,
+      largePhoto: '',
+    });
   };
 
   render() {
@@ -100,6 +111,7 @@ export class App extends Component {
       isLoading,
       error,
       largePhoto,
+      isModal
     } = this.state;
     console.log('query and page and allPages: ', query, page, allPages);
     console.log('photos', photos);
@@ -109,17 +121,14 @@ export class App extends Component {
         <Searchbar getPhotos={value => this.getPhotos(value, 1)} />
         {error ? <p>'Whoops, something went wrong: {error.message}</p> : null}
 
-        <ImageGallery>
-          <ImageGalleryItem
-            photos={photos}
-            showModal={largeSrc => this.showModal(largeSrc)}
-          />
+        <ImageGallery photos={photos} showModal={this.showModal}>
+          
           {isLoading && <Loader />}
         </ImageGallery>
         {totalHits > 0 && page < allPages && page !== allPages && (
           <Button page={page} onClick={next => this.getPhotos(query, next)} />
         )}
-        {largePhoto && <Modal src={largePhoto} />}
+        {isModal && <Modal hideMod={this.hideModal} largeImg={largePhoto} />}
       </div>
     );
   }
