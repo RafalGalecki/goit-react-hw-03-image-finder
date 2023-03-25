@@ -8,7 +8,7 @@ class Loader extends Component {
       <Circles
         height="45vh"
         width="45vw"
-        color=" #2196f3"
+        color="#e18957"
         ariaLabel="circles-loading"
         wrapperStyle={{}}
         wrapperClass={css.spinner}
