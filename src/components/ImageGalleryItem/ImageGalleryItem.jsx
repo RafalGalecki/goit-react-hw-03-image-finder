@@ -1,7 +1,7 @@
 //import { Component } from 'react';
 import React from 'react';
 import css from './ImageGalleryItem.module.css';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
 //const INITIAL_SRC = { largeSrc: '' };
 //class ImageGalleryItem extends Component {
