@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import css from './ImageGallery.module.css';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 class ImageGallery extends Component {
   render() {
@@ -15,7 +15,7 @@ class ImageGallery extends Component {
             webformatURL={webformatURL}
             largeImageURL={largeImageURL}
             tags={tags}
-            showMod={showModal}
+            showModal={showModal}
           />
         ))}
       </ul>
@@ -23,8 +23,9 @@ class ImageGallery extends Component {
   }
 }
 
-// ImageGallery.propTypes = {
-//   children: PropTypes.node,
-// };
+ImageGallery.propTypes = {
+  photos: PropTypes.array.isRequired,
+  showModal: PropTypes.func.isRequired,
+};
 
 export default ImageGallery;

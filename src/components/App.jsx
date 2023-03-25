@@ -1,10 +1,8 @@
 import { Component } from 'react';
 import css from './App.module.css';
-//import axios from 'axios';
 import { fetchPhotosWithQuery, PER_PAGE } from 'services/api';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
-//import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Modal from './Modal/Modal';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
@@ -111,7 +109,7 @@ export class App extends Component {
       isLoading,
       error,
       largePhoto,
-      isModal
+      isModal,
     } = this.state;
     console.log('query and page and allPages: ', query, page, allPages);
     console.log('photos', photos);
@@ -122,13 +120,12 @@ export class App extends Component {
         {error ? <p>'Whoops, something went wrong: {error.message}</p> : null}
 
         <ImageGallery photos={photos} showModal={this.showModal}>
-          
           {isLoading && <Loader />}
         </ImageGallery>
         {totalHits > 0 && page < allPages && page !== allPages && (
           <Button page={page} onClick={next => this.getPhotos(query, next)} />
         )}
-        {isModal && <Modal hideMod={this.hideModal} largeImg={largePhoto} />}
+        {isModal && <Modal hideModal={this.hideModal} largeImg={largePhoto} />}
       </div>
     );
   }
