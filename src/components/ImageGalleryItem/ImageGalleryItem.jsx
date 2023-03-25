@@ -1,18 +1,18 @@
-//import { Component } from 'react';
-import React from 'react';
+import { Component } from 'react';
+//import React from 'react';
 import css from './ImageGalleryItem.module.css';
 //import PropTypes from 'prop-types';
 
 //const INITIAL_SRC = { largeSrc: '' };
-//class ImageGalleryItem extends Component {
+class ImageGalleryItem extends Component {
   //state = { ...INITIAL_SRC };
 
 
-const ImageGalleryItem = props => {
-  //render() {
-    const { id, webformatURL, largeImageURL, tags, showMod  } = props;
+  //const ImageGalleryItem = props => {
+  render() {
+    const { id, webformatURL, largeImageURL, tags, showMod } = this.props;
 
-   return (
+    return (
       <li key={id} className={css.gallery__item}>
         <img
           key={id}
@@ -26,8 +26,8 @@ const ImageGalleryItem = props => {
       </li>
     );
   
+  }
 }
-
 // ImageGalleryItem.propTypes = {
 //   photos: PropTypes.array,
 //   webformatURL: PropTypes.string,
