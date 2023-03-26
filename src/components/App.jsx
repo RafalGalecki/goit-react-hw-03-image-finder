@@ -30,7 +30,7 @@ export class App extends Component {
 
     // get initial photos onload
     const response = await fetchPhotosWithQuery(this.state.query);
-    console.log('response didmount', response);
+    
     this.setState({ photos: response.hits });
 
     setTimeout(async () => {
@@ -40,8 +40,9 @@ export class App extends Component {
 
   getPhotos = async (query, page) => {
     this.setState({ isLoading: true });
-    console.log('przed fetch:', page);
+    
     const response = await fetchPhotosWithQuery(query, page);
+
     if (response.totalHits > 0) {
       let photos = [];
       response.hits.forEach(photo => {
@@ -54,6 +55,8 @@ export class App extends Component {
       });
 
       const allPages = Math.ceil(response.totalHits / PER_PAGE);
+
+     
       const previousPhotos = this.state.photos;
 
       if (page !== 1) {
@@ -68,10 +71,11 @@ export class App extends Component {
 
       this.setState(prevState => {
         let photosToRender = [];
-        console.log('prevState', prevState);
+        
         page > 1
           ? (photosToRender = [...prevState.photos, ...photos])
           : (photosToRender = [...photos]);
+        
         return {
           query,
           totalHits: response.totalHits,
@@ -111,8 +115,6 @@ export class App extends Component {
       largePhoto,
       isModal,
     } = this.state;
-    console.log('query and page and allPages: ', query, page, allPages);
-    console.log('photos', photos);
 
     return (
       <div className={css.main}>
