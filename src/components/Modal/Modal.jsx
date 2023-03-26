@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 
 class Modal extends Component {
   componentDidMount() {
-    window.addEventListener('keydown', this.handleClose);
+    window.addEventListener('keyup', this.handleClose);
   }
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleClose);
+    window.removeEventListener('keyup', this.handleClose);
   }
   handleClose = event => {
     if (event.code === 'Escape') {
